@@ -16,9 +16,18 @@ div.topics {
   border: solid 1px hsl(0, 50%, 30%);
 }
 
+div.active a {
+  background: red;
+}
+
+a.topic-name {
+  cursor: pointer;
+}
+
 div.topic-filename {
   padding-left: 20px;
 }
+
 div.file-name {
   font-weight: "bold";
 }

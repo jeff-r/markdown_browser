@@ -1,38 +1,72 @@
 import React, { Component } from "react";
 import "./App.css";
 
-const Topics = ({ topics, currentTopicIndex }) => (
+const Topics = ({
+  topics,
+  currentTopicIndex,
+  onTopicClicked,
+  onFileClicked
+}) => (
   <div className="topics">
     {topics.map((topic, index) => {
       return (
         <Topic
+          index={index}
           key={topic.directoryName}
           topic={topic}
           active={currentTopicIndex == index}
+          onTopicClicked={onTopicClicked}
+          onFileClicked={onFileClicked}
         />
       );
     })}
   </div>
 );
 
-const Topic = ({ topic, active }) => {
+const Topic = ({ index, topic, active, onTopicClicked, onFileClicked }) => {
   if (active) {
     return (
-      <div>
-        <b>{topic.directoryName}</b>
-        <TopicFiles filenames={topic.files.map(file => file.fileName)} />
+      <div className="active">
+        <a
+          data-topicindex={index}
+          className="topic-name"
+          onClick={onTopicClicked}
+        >
+          {topic.directoryName}
+        </a>
+        <TopicFiles
+          filenames={topic.files.map(file => file.fileName)}
+          onFileClicked={onFileClicked}
+        />
       </div>
     );
   } else {
-    return <div>{topic.directoryName}</div>;
+    return (
+      <div>
+        <a
+          data-topicindex={index}
+          className="topic-name"
+          onClick={onTopicClicked}
+        >
+          {topic.directoryName}
+        </a>
+      </div>
+    );
   }
 };
 
-const TopicFiles = ({ filenames }) => {
+const TopicFiles = ({ filenames, onFileClicked }) => {
   return (
     <div>
-      {filenames.map(name => (
-        <div className="topic-filename">{name}</div>
+      {filenames.map((name, index) => (
+        <div
+          key={name}
+          className="topic-filename"
+          onClick={onFileClicked}
+          data-index={index}
+        >
+          {name}
+        </div>
       ))}
     </div>
   );
@@ -89,6 +123,14 @@ class App extends Component {
     };
   }
 
+  handleTopicClicked = event => {
+    this.setState({ currentTopicIndex: event.target.dataset.topicindex });
+  };
+
+  handleFileClicked = event => {
+    this.setState({ currentFileIndex: event.target.dataset.index });
+  };
+
   currentFile = () => {
     const { currentFileIndex, currentTopicIndex } = this.state;
     const numberOfFiles = this.state.topics[currentTopicIndex].files.length;
@@ -108,6 +150,8 @@ class App extends Component {
         <Topics
           topics={this.state.topics}
           currentTopicIndex={currentTopicIndex}
+          onTopicClicked={this.handleTopicClicked}
+          onFileClicked={this.handleFileClicked}
         />
         <File file={this.currentFile()} />
       </div>
