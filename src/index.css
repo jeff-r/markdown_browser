@@ -3,3 +3,49 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+div.container {
+  height: 100%;
+  display: flex;
+  padding: 10px;
+}
+
+div.topics {
+  padding: 10px;
+  background: hsl(0, 50%, 90%);
+  border: solid 1px hsl(0, 50%, 30%);
+}
+
+div.topic-filename {
+  padding-left: 20px;
+}
+div.file-name {
+  font-weight: "bold";
+}
+
+div.file-content {
+  margin-left: 10px;
+  background: hsl(180, 50%, 90%);
+  border: solid 1px hsl(180, 50%, 30%);
+  width: 100%;
+}
+
+div.file {
+  padding: 10px;
+}
+
+div.content-header {
+  padding: 10px;
+  display: flex;
+  background: hsl(180, 50%, 15%);
+  color: white;
+}
+
+div.actions {
+  margin-left: auto;
+  display: flex;
+}
+
+div.content {
+  padding: 10px;
+}

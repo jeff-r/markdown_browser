@@ -11,10 +11,6 @@ div.flex {
   display: flex;
 }
 
-div.contents {
-  width: 100%;
-}
-
 div.contents-header {
   display: flex;
 }
@@ -24,6 +20,7 @@ div.actions {
   display: flex;
 }
 
-div.content {
+div.container {
   height: 100%;
+  display: flex;
 }
