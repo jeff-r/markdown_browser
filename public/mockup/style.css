@@ -1,0 +1,29 @@
+body {
+  background: #eee;
+}
+
+div {
+  padding: 2px;
+  margin: 2px;
+}
+
+div.flex {
+  display: flex;
+}
+
+div.contents {
+  width: 100%;
+}
+
+div.contents-header {
+  display: flex;
+}
+
+div.actions {
+  margin-left: auto;
+  display: flex;
+}
+
+div.content {
+  height: 100%;
+}
