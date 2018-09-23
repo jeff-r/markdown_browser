@@ -8,37 +8,25 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentFileIndex: 1,
+      loading: true,
+      currentFileIndex: 0,
       currentTopicIndex: 0,
-      topics: [
-        {
-          directoryName: "jobsearch",
-          files: [
-            {
-              fileName: "index.md",
-              content: "It was a dark and stormy night"
-            },
-            {
-              fileName: "notes.md",
-              content: "Additional notes about a job or company"
-            },
-            {
-              fileName: "resume.fodt",
-              content: "Maybe placeholder text here"
-            }
-          ]
-        },
-        {
-          directoryName: "cannabis",
-          files: [
-            {
-              fileName: "index.md",
-              content: "Strain notes go here"
-            }
-          ]
-        }
-      ]
+      topics: []
     };
+  }
+
+  fetchDirectories = () => {
+    const url = "http://localhost:4000/";
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ loading: false, topics: data.filenames });
+      });
+  };
+
+  componentDidMount() {
+    this.fetchDirectories();
   }
 
   handleTopicClicked = event => {
@@ -61,19 +49,23 @@ class App extends Component {
   };
 
   render() {
-    const { currentFileIndex, currentTopicIndex } = this.state;
+    const { loading, currentFileIndex, currentTopicIndex } = this.state;
 
-    return (
-      <div className="container">
-        <Topics
-          topics={this.state.topics}
-          currentTopicIndex={currentTopicIndex}
-          onTopicClicked={this.handleTopicClicked}
-          onFileClicked={this.handleFileClicked}
-        />
-        <File file={this.currentFile()} />
-      </div>
-    );
+    if (loading) {
+      return <p>Loading ...</p>;
+    } else {
+      return (
+        <div className="container">
+          <Topics
+            topics={this.state.topics}
+            currentTopicIndex={currentTopicIndex}
+            onTopicClicked={this.handleTopicClicked}
+            onFileClicked={this.handleFileClicked}
+          />
+          <File file={this.currentFile()} />
+        </div>
+      );
+    }
   }
 }
 

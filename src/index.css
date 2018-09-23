@@ -16,7 +16,7 @@ div.topics {
   border: solid 1px hsl(0, 50%, 30%);
 }
 
-div.active a {
+div.active > a {
   background: red;
 }
 
@@ -24,7 +24,8 @@ a.topic-name {
   cursor: pointer;
 }
 
-div.topic-filename {
+.topic-filename {
+  cursor: pointer;
   padding-left: 20px;
 }
 
