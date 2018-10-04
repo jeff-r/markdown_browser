@@ -12,9 +12,9 @@ export const Topics = ({
       return (
         <Topic
           index={index}
-          key={topic.directoryName}
+          key={index}
           topic={topic}
-          active={currentTopicIndex == index}
+          active={parseInt(currentTopicIndex) === index}
           onTopicClicked={onTopicClicked}
           onFileClicked={onFileClicked}
         />

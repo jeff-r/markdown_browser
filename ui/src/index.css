@@ -59,3 +59,12 @@ div.actions {
 div.content {
   padding: 10px;
 }
+
+.fileeditor {
+  display: flex;
+}
+
+.fileeditor textarea {
+  min-width: 500px;
+  min-height: 200px;
+}
