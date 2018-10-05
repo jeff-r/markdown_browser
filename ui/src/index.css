@@ -61,11 +61,19 @@ div.content {
   padding: 10px;
 }
 
-.fileeditor {
+.file-editor {
+  margin-left: 20px;
+}
+
+.file-editor-form {
   display: flex;
 }
 
-.fileeditor textarea {
+.file-editor-form textarea {
   min-width: 500px;
   min-height: 200px;
+}
+
+.editor-titlebar {
+  min-height: 2em;
 }

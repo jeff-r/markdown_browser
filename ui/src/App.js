@@ -92,6 +92,12 @@ class App extends Component {
     this.fetchDirectories();
   };
 
+  goHome = () => {
+    this.setState({
+      editing: false
+    });
+  };
+
   render() {
     const { editing, loading, currentTopicIndex } = this.state;
 
@@ -102,6 +108,7 @@ class App extends Component {
         <FileEditor
           file={this.currentFile()}
           handleSubmit={this.handleContentChanged}
+          goHome={this.goHome}
         />
       );
     } else {

@@ -8,8 +8,12 @@ const EditorPane = props => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <textarea value={content} onChange={handleContentChanged} />
-        <input type="submit" value="submit" />
+        <div>
+          <textarea value={content} onChange={handleContentChanged} />
+        </div>
+        <div>
+          <input type="submit" value="submit" />
+        </div>
       </form>
     </div>
   );
@@ -19,10 +23,11 @@ class FileEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    const { handleSubmit, file } = props;
+    const { handleSubmit, file, goHome } = props;
     const { fileName, content } = file;
 
     this.handleSubmit = handleSubmit;
+    this.goHome = goHome;
 
     this.state = {
       content: content,
@@ -49,13 +54,19 @@ class FileEditor extends React.Component {
 
   render() {
     return (
-      <div className="fileeditor">
-        <EditorPane
-          content={this.state.content}
-          handleContentChanged={this.handleContentChanged}
-          handleSubmit={this.onSubmit}
-        />
-        <RenderedFileContent content={this.renderedContent()} />
+      <div className="file-editor">
+        <div className="editor-titlebar">
+          <a onClick={this.goHome}>Home</a>
+        </div>
+
+        <div className="file-editor-form">
+          <EditorPane
+            content={this.state.content}
+            handleContentChanged={this.handleContentChanged}
+            handleSubmit={this.onSubmit}
+          />
+          <RenderedFileContent content={this.renderedContent()} />
+        </div>
       </div>
     );
   }
