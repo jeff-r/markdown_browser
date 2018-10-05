@@ -13,6 +13,7 @@ export const Topic = ({
       <div className="active">
         <a
           data-topicindex={index}
+          data-topicname={topic.directoryName}
           className="topic-name"
           onClick={onTopicClicked}
         >
@@ -29,6 +30,7 @@ export const Topic = ({
       <div>
         <a
           data-topicindex={index}
+          data-topicname={topic.directoryName}
           className="topic-name"
           onClick={onTopicClicked}
         >

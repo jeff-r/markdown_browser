@@ -3,18 +3,21 @@ import { Topic } from "./Topic";
 
 export const Topics = ({
   topics,
-  currentTopicIndex,
+  currentTopicName,
   onTopicClicked,
   onFileClicked
 }) => (
   <div className="topics">
-    {topics.map((topic, index) => {
+    {topics.filter(topic => topic.directoryName).map((topic, index) => {
+      console.log(topic.directoryName);
+      console.log(topic);
+      console.log(currentTopicName);
       return (
         <Topic
           index={index}
           key={index}
           topic={topic}
-          active={parseInt(currentTopicIndex, 10) === index}
+          active={currentTopicName === topic.directoryName}
           onTopicClicked={onTopicClicked}
           onFileClicked={onFileClicked}
         />

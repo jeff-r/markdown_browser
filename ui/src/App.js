@@ -3,6 +3,7 @@ import "./App.css";
 import { Topics } from "./Topics";
 import { File } from "./File";
 import FileEditor from "./FileEditor";
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -14,8 +15,8 @@ class App extends Component {
       loading: true,
       editing: false,
       currentFileName: "",
-      currentFileIndex: 0,
-      currentTopicIndex: 2,
+      currentTopicName: "",
+      files: [],
       topics: topics
     };
   }
@@ -26,17 +27,15 @@ class App extends Component {
     fetch(this.apiUrl())
       .then(response => response.json())
       .then(data => {
-        this.setState({ loading: false, topics: data.filenames });
+        this.setState({
+          loading: false,
+          topics: data.filenames,
+          files: this.getAllFiles(data.filenames)
+        });
       });
   };
 
   updateFileContent = (filename, content) => {
-    console.log("this.updateFileContent");
-
-    let body = JSON.stringify({ filename: filename, content: content });
-    console.log(body);
-    console.log(filename);
-
     let options = {
       method: "post",
       mode: "cors",
@@ -57,25 +56,34 @@ class App extends Component {
   }
 
   handleTopicClicked = event => {
-    this.setState({ currentTopicIndex: event.target.dataset.topicindex });
+    console.log("this.handleTopicClicked");
+    console.log(event.target.dataset.topicname);
+    this.setState({
+      currentTopicName: event.target.dataset.topicname
+    });
   };
 
   handleFileClicked = event => {
     this.setState({
-      currentFileIndex: event.target.dataset.index,
       currentFileName: event.target.dataset.filename
     });
   };
 
+  getAllFiles = topics => {
+    let files = [];
+    topics.forEach(topic => {
+      if (topic.files) {
+        topic.files.forEach(file => files.push(file));
+      }
+    });
+    return files;
+  };
+
   currentFile = () => {
-    const { currentFileIndex, currentTopicIndex } = this.state;
-    const numberOfFiles = this.state.topics[currentTopicIndex].files.length;
-    let index = currentFileIndex;
-    if (index >= numberOfFiles) {
-      index = 0;
-      this.setState({ currentFileIndex: index });
-    }
-    return this.state.topics[currentTopicIndex].files[index];
+    let currentFile = this.state.files.filter(
+      file => file.fileName === this.state.currentFileName
+    );
+    return currentFile[0] || this.state.files[0];
   };
 
   handleEditFile = event => {
@@ -99,7 +107,7 @@ class App extends Component {
   };
 
   render() {
-    const { editing, loading, currentTopicIndex } = this.state;
+    const { editing, loading, currentTopicName } = this.state;
 
     if (loading) {
       return <p>Loading ...</p>;
@@ -116,7 +124,7 @@ class App extends Component {
         <div className="container">
           <Topics
             topics={this.state.topics}
-            currentTopicIndex={currentTopicIndex}
+            currentTopicName={currentTopicName}
             onTopicClicked={this.handleTopicClicked}
             onFileClicked={this.handleFileClicked}
           />
