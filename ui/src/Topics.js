@@ -14,7 +14,7 @@ export const Topics = ({
           index={index}
           key={index}
           topic={topic}
-          active={parseInt(currentTopicIndex) === index}
+          active={parseInt(currentTopicIndex, 10) === index}
           onTopicClicked={onTopicClicked}
           onFileClicked={onFileClicked}
         />

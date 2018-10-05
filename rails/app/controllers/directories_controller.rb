@@ -8,4 +8,9 @@ class DirectoriesController < ApplicationController
   def index
     render json: { filenames: files }
   end
+
+  def update_file
+    update_file_content params[:filename], params[:content]
+    render json: { params: params }
+  end
 end

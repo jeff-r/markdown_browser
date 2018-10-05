@@ -8,7 +8,7 @@ end
 
 class FileListerTest < ActiveSupport::TestCase
   test 'project_dir defaults to correct path' do
-    expected = '/home/jeff/Dropbox/docs/jeffs-job-folder/2018'
+    expected = '/home/jeff/Dropbox/docs/jeffs-job-folder/2018/notes/'
     assert_equal expected, lister.project_dir
   end
 
@@ -30,7 +30,8 @@ class FileListerTest < ActiveSupport::TestCase
       { fileName: 'sample.pdf', content: 'sample.pdf', type: 'file' }
     ]
 
-    assert_equal expected,lister.files(sample_dir_path)
+    lister.project_dir = sample_dir_path
+    assert_equal expected,lister.files
   end
 
   test 'returns the filename for a nonrenderable file' do
@@ -41,6 +42,11 @@ class FileListerTest < ActiveSupport::TestCase
   test 'returns contents of a renderable file' do
     expected = 'Sample markdown content'
     assert lister.file_contents(markdown_file_path).include?(expected)
+  end
+
+  test 'returns relative path of a file' do
+    path = lister.project_dir + '/foo/bar.md'
+    assert_equal 'foo/bar.md', lister.relative_path(path)
   end
 
   private

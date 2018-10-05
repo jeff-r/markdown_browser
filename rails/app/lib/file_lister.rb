@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module FileLister
+  attr_accessor :project_dir
+
   def files(dir = project_dir)
     paths = Dir.glob("#{dir}/*")
     paths.map do |path|
@@ -12,13 +14,9 @@ module FileLister
     end
   end
 
-  def test_dir
-    '/home/jeff/Dropbox/projects/javascript/react/notes/notes_rails/tmp/markdown'
-  end
-
   def file_hash(path)
     {
-      fileName: File.basename(path),
+      fileName: relative_path(path),
       content: file_contents(path),
       type: File.ftype(path)
     }
@@ -32,7 +30,7 @@ module FileLister
   end
 
   def project_dir
-    '/home/jeff/Dropbox/docs/jeffs-job-folder/2018'
+    @project_dir ||= '/home/jeff/Dropbox/docs/jeffs-job-folder/2018/docs/'
   end
 
   def renderable?(filename)
@@ -46,5 +44,14 @@ module FileLister
     else
       File.basename(filename)
     end
+  end
+
+  def update_file_content(filename, content)
+    path = project_dir + filename
+    File.write path, content
+  end
+
+  def relative_path(path)
+    path.gsub(project_dir.to_s, "").gsub(/^\//, "")
   end
 end

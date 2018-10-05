@@ -26,19 +26,25 @@ class FileEditor extends React.Component {
 
     this.state = {
       content: content,
-      fileName: fileName
+      filename: fileName
     };
   }
 
   renderedContent = () => Marked(this.state.content);
 
   handleContentChanged = event => {
-    this.setState({ content: event.target.value });
+    this.setState({
+      filename: this.state.filename,
+      content: event.target.value
+    });
   };
 
   onSubmit = event => {
     event.preventDefault();
-    this.handleSubmit(this.state.content);
+    this.handleSubmit({
+      filename: this.state.filename,
+      content: this.state.content
+    });
   };
 
   render() {

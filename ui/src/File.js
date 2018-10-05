@@ -11,7 +11,9 @@ export const File = ({ file, onEditClicked }) => {
       <div className="content-header">
         <div className="file-name">{fileName}</div>
         <div className="actions">
-          Edit | <a onClick={onEditClicked}>New</a>
+          <a className="link" onClick={onEditClicked}>
+            Edit
+          </a>
         </div>
       </div>
       <RenderedFileContent content={renderedContent} />

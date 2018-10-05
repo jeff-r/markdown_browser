@@ -20,7 +20,8 @@ div.active > a {
   background: red;
 }
 
-a.topic-name {
+a.topic-name,
+a.link {
   cursor: pointer;
 }
 

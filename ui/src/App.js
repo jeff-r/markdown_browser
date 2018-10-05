@@ -13,20 +13,43 @@ class App extends Component {
     this.state = {
       loading: true,
       editing: false,
+      currentFileName: "",
       currentFileIndex: 0,
       currentTopicIndex: 2,
       topics: topics
     };
   }
 
-  fetchDirectories = () => {
-    const url = "http://localhost:4000/";
+  apiUrl = () => "http://localhost:4000/";
 
-    fetch(url)
+  fetchDirectories = () => {
+    fetch(this.apiUrl())
       .then(response => response.json())
       .then(data => {
         this.setState({ loading: false, topics: data.filenames });
       });
+  };
+
+  updateFileContent = (filename, content) => {
+    console.log("this.updateFileContent");
+
+    let body = JSON.stringify({ filename: filename, content: content });
+    console.log(body);
+    console.log(filename);
+
+    let options = {
+      method: "post",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ filename: filename, content: content })
+    };
+    let url = this.apiUrl() + "update_file";
+    fetch(url, options)
+      .then(res => res.json())
+      .then(res => console.log(res));
   };
 
   componentDidMount() {
@@ -38,7 +61,10 @@ class App extends Component {
   };
 
   handleFileClicked = event => {
-    this.setState({ currentFileIndex: event.target.dataset.index });
+    this.setState({
+      currentFileIndex: event.target.dataset.index,
+      currentFileName: event.target.dataset.filename
+    });
   };
 
   currentFile = () => {
@@ -47,7 +73,6 @@ class App extends Component {
     let index = currentFileIndex;
     if (index >= numberOfFiles) {
       index = 0;
-      console.log("Setting content for topic " + index);
       this.setState({ currentFileIndex: index });
     }
     return this.state.topics[currentTopicIndex].files[index];
@@ -57,19 +82,14 @@ class App extends Component {
     this.setState({ editing: true });
   };
 
-  handleContentChanged = newContent => {
-    console.log(newContent);
+  handleContentChanged = ({ filename, content }) => {
+    this.updateFileContent(filename, content);
+
     this.setState({
-      editing: false,
-      topics: this.state.topics.map((topic, index) => {
-        if (index === this.state.currentFileIndex) {
-          console.log("index: " + index);
-          console.log(topic);
-          topic.content = newContent;
-        }
-        return topic;
-      })
+      editing: false
     });
+
+    this.fetchDirectories();
   };
 
   render() {

@@ -11,12 +11,14 @@ export const TopicFiles = ({ filenames, onFileClicked }) => {
                 className="topic-filename"
                 onClick={onFileClicked}
                 data-index={index}
+                data-filename={name}
               >
                 {name}
               </a>
             </div>
           );
         }
+        return "";
       })}
     </div>
   );
