@@ -1,5 +1,6 @@
 import React from "react";
 import { TopicFiles } from "./TopicFiles";
+import { Link } from "react-router-dom";
 
 export const Topic = ({
   index,
@@ -11,14 +12,15 @@ export const Topic = ({
   if (active) {
     return (
       <div className="active">
-        <a
+        <Link
+          to={`/${topic.directoryName}/`}
           data-topicindex={index}
           data-topicname={topic.directoryName}
           className="topic-name"
           onClick={onTopicClicked}
         >
           {topic.directoryName}
-        </a>
+        </Link>
         <TopicFiles
           filenames={topic.files.map(file => file.fileName)}
           onFileClicked={onFileClicked}
@@ -28,14 +30,15 @@ export const Topic = ({
   } else {
     return (
       <div>
-        <a
+        <Link
+          to={`/${topic.directoryName}/`}
           data-topicindex={index}
           data-topicname={topic.directoryName}
           className="topic-name"
           onClick={onTopicClicked}
         >
           {topic.directoryName}
-        </a>
+        </Link>
       </div>
     );
   }

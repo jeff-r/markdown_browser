@@ -9,9 +9,6 @@ export const Topics = ({
 }) => (
   <div className="topics">
     {topics.filter(topic => topic.directoryName).map((topic, index) => {
-      console.log(topic.directoryName);
-      console.log(topic);
-      console.log(currentTopicName);
       return (
         <Topic
           index={index}

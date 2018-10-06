@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Topics } from "./Topics";
-import { File } from "./File";
 import FileEditor from "./FileEditor";
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { TopicRoute } from "./TopicRoute";
 
 class App extends Component {
   constructor(props) {
@@ -56,8 +54,6 @@ class App extends Component {
   }
 
   handleTopicClicked = event => {
-    console.log("this.handleTopicClicked");
-    console.log(event.target.dataset.topicname);
     this.setState({
       currentTopicName: event.target.dataset.topicname
     });
@@ -80,10 +76,16 @@ class App extends Component {
   };
 
   currentFile = () => {
-    let currentFile = this.state.files.filter(
-      file => file.fileName === this.state.currentFileName
-    );
-    return currentFile[0] || this.state.files[0];
+    return this.fileFromUrl(this.state.currentFileName);
+  };
+
+  fileFromUrl = url => {
+    if (url === "/") {
+      return "";
+    }
+    let path = url.slice(1);
+    let fileArray = this.state.files.filter(file => file.fileName === path);
+    return fileArray[0] || this.state.files[0];
   };
 
   handleEditFile = event => {
@@ -106,9 +108,39 @@ class App extends Component {
     });
   };
 
+  getTopicAndFile = match => {
+    let { topic, file } = match.params;
+    if (
+      topic !== this.state.currentTopicName ||
+      file !== this.state.currentFileName
+    ) {
+      this.setState({
+        currentFileName: file,
+        currentTopicName: topic
+      });
+    }
+  };
+
+  getFirstTopic = () => {
+    let topics = this.state.topics.filter(topic => topic.directoryName);
+    return topics[0];
+  };
+
+  topicRoute = path => (
+    <TopicRoute
+      thePath={path}
+      getFirstTopic={this.getFirstTopic}
+      getTopicAndFile={this.getTopicAndFile}
+      topics={this.state.topics}
+      handleTopicClicked={this.handleTopicClicked}
+      handleFileClicked={this.handleFileClicked}
+      handleEditFile={this.handleEditFile}
+      fileFromUrl={this.fileFromUrl}
+    />
+  );
+
   render() {
     const { editing, loading, currentTopicName } = this.state;
-
     if (loading) {
       return <p>Loading ...</p>;
     } else if (editing) {
@@ -121,14 +153,10 @@ class App extends Component {
       );
     } else {
       return (
-        <div className="container">
-          <Topics
-            topics={this.state.topics}
-            currentTopicName={currentTopicName}
-            onTopicClicked={this.handleTopicClicked}
-            onFileClicked={this.handleFileClicked}
-          />
-          <File file={this.currentFile()} onEditClicked={this.handleEditFile} />
+        <div>
+          {this.topicRoute("/")}
+          {this.topicRoute("/:topic")}
+          {this.topicRoute("/:topic/:file")}
         </div>
       );
     }

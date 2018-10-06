@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const TopicFiles = ({ filenames, onFileClicked }) => {
   return (
@@ -7,14 +8,14 @@ export const TopicFiles = ({ filenames, onFileClicked }) => {
         if (name) {
           return (
             <div key={index}>
-              <a
+              <Link
+                to={`/${name}`}
                 className="topic-filename"
-                onClick={onFileClicked}
                 data-index={index}
                 data-filename={name}
               >
                 {name}
-              </a>
+              </Link>
             </div>
           );
         }

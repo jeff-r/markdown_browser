@@ -4,7 +4,8 @@ import RenderedFileContent from "./RenderedFileContent";
 
 export const File = ({ file, onEditClicked }) => {
   const { fileName, content } = file;
-  let renderedContent = Marked(content);
+  let renderedContent = "";
+  if (content) renderedContent = Marked(content);
 
   return (
     <div className="file-content">
