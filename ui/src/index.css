@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 div.container {
@@ -12,8 +12,23 @@ div.container {
 
 div.topics {
   padding: 10px;
-  background: hsl(0, 50%, 90%);
-  border: solid 1px hsl(0, 50%, 30%);
+  border-top: solid 1px hsl(180, 50%, 90%);
+  border-right: solid 1px hsl(180, 50%, 90%);
+  border-bottom: solid 1px hsl(180, 50%, 90%);
+}
+
+a:visited {
+  color: hsl(180, 90%, 20%);
+}
+
+a:hover {
+  color: hsl(180, 90%, 40%);
+  transition: color 1000ms ease-in;
+}
+
+a {
+  text-decoration: none;
+  color: hsl(180, 90%, 30%);
 }
 
 div.active > a {
@@ -36,8 +51,6 @@ div.file-name {
 
 div.file-content {
   margin-left: 10px;
-  background: hsl(180, 50%, 90%);
-  border: solid 1px hsl(180, 50%, 30%);
   width: 100%;
 }
 
@@ -48,8 +61,20 @@ div.file {
 div.content-header {
   padding: 10px;
   display: flex;
-  background: hsl(180, 50%, 15%);
+  background: hsl(0, 50%, 10%);
   color: white;
+}
+
+div.content-header a {
+  padding-right: 10px;
+  display: flex;
+  background: hsl(0, 50%, 10%);
+  color: white;
+}
+
+div.content-header a:hover {
+  color: white;
+  font-weight: bold;
 }
 
 div.actions {
