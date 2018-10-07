@@ -1,11 +1,25 @@
 import React from "react";
-import Marked from "marked";
-import RenderedFileContent from "./RenderedFileContent";
+import { renderNodes } from "simple-commonmark-react";
+
+import { createElement } from "react";
+import { Link } from "react-router-dom";
+import LinkRenderer from "simple-commonmark-react/dist/renderers/LinkRenderer";
+
+export default class ReactRouterLinkRenderer extends LinkRenderer {
+  renderNodeWithProps(props) {
+    const url = props.href;
+    delete props.href;
+    props.to = url;
+    return createElement(Link, props, []);
+  }
+}
 
 export const File = ({ file, onEditClicked }) => {
   const { fileName, content } = file;
-  let renderedContent = "";
-  if (content) renderedContent = Marked(content);
+  let markdownOptions = {
+    className: "markdown",
+    customRenderers: { link: ReactRouterLinkRenderer }
+  };
 
   return (
     <div className="file-content">
@@ -17,7 +31,7 @@ export const File = ({ file, onEditClicked }) => {
           </a>
         </div>
       </div>
-      <RenderedFileContent content={renderedContent} />
+      <div>{renderNodes(content, markdownOptions)}</div>
     </div>
   );
 };
