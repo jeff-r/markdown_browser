@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import FileEditor from "./FileEditor";
 import { TopicRoute } from "./TopicRoute";
+import { Route } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -145,10 +146,15 @@ class App extends Component {
       return <p>Loading ...</p>;
     } else if (editing) {
       return (
-        <FileEditor
-          file={this.currentFile()}
-          handleSubmit={this.handleContentChanged}
-          goHome={this.goHome}
+        <Route
+          path="/:topic/:file"
+          render={({ match }) => (
+            <FileEditor
+              file={this.fileFromUrl(match.url)}
+              handleSubmit={this.handleContentChanged}
+              goHome={this.goHome}
+            />
+          )}
         />
       );
     } else {
