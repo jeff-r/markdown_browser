@@ -1,16 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { isatty } from "tty";
 
-export const TopicFiles = ({ filenames, onFileClicked }) => {
+export const TopicFiles = ({ filenames, currentFileName }) => {
   return (
     <div>
       {filenames.map((name, index) => {
         if (name) {
+          let isActive = false;
+          if (name === currentFileName) isActive = true;
           return (
             <div key={index}>
               <Link
                 to={`/${name}`}
-                className="topic-filename"
+                className={`topic-filename ${isActive ? "current" : ""}`}
                 data-index={index}
                 data-filename={name}
               >

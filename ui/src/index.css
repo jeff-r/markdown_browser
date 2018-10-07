@@ -12,20 +12,24 @@ div.container {
 
 div.topics {
   padding: 10px;
-  border-right: solid 1px hsl(180, 50%, 90%);
+  border-right: solid 1px hsl(180, 20%, 90%);
 }
 
 a:visited {
-  color: hsl(180, 90%, 20%);
+  color: hsl(180, 85%, 20%);
 }
 
 a:hover {
   color: hsl(180, 50%, 40%);
 }
 
+a.current {
+  color: hsl(180, 70%, 40%);
+}
+
 a {
   text-decoration: none;
-  color: hsl(180, 10%, 30%);
+  color: hsl(180, 85%, 20%);
 }
 
 div.active > a {

@@ -4,6 +4,7 @@ import { Topic } from "./Topic";
 export const Topics = ({
   topics,
   currentTopicName,
+  currentFileName,
   onTopicClicked,
   onFileClicked
 }) => (
@@ -14,6 +15,7 @@ export const Topics = ({
           index={index}
           key={index}
           topic={topic}
+          currentFileName={currentFileName}
           active={currentTopicName === topic.directoryName}
           onTopicClicked={onTopicClicked}
           onFileClicked={onFileClicked}

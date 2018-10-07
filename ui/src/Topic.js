@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export const Topic = ({
   index,
   topic,
+  currentFileName,
   active,
   onTopicClicked,
   onFileClicked
@@ -22,6 +23,7 @@ export const Topic = ({
           {topic.directoryName}
         </Link>
         <TopicFiles
+          currentFileName={currentFileName}
           filenames={topic.files
             .sort((file1, file2) => file1.fileName > file2.fileName)
             .map(file => file.fileName)}

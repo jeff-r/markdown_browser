@@ -17,11 +17,11 @@ export const TopicRoute = ({
     <Route
       exact
       path={thePath}
-      getTopicAndFile={getTopicAndFile}
       render={({ match }) => (
         <div className="container">
           <Topics
             topics={topics}
+            currentFileName={fileFromUrl(match.url).fileName}
             currentTopicName={
               match.params.topic
                 ? match.params.topic
