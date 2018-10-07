@@ -12,9 +12,7 @@ div.container {
 
 div.topics {
   padding: 10px;
-  border-top: solid 1px hsl(180, 50%, 90%);
   border-right: solid 1px hsl(180, 50%, 90%);
-  border-bottom: solid 1px hsl(180, 50%, 90%);
 }
 
 a:visited {
@@ -22,13 +20,12 @@ a:visited {
 }
 
 a:hover {
-  color: hsl(180, 90%, 40%);
-  transition: color 1000ms ease-in;
+  color: hsl(180, 50%, 40%);
 }
 
 a {
   text-decoration: none;
-  color: hsl(180, 90%, 30%);
+  color: hsl(180, 10%, 30%);
 }
 
 div.active > a {
@@ -96,7 +93,7 @@ div.content {
 
 .file-editor-form textarea {
   min-width: 500px;
-  min-height: 200px;
+  min-height: 400px;
 }
 
 .editor-titlebar {

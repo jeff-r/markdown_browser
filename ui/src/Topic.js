@@ -22,7 +22,9 @@ export const Topic = ({
           {topic.directoryName}
         </Link>
         <TopicFiles
-          filenames={topic.files.map(file => file.fileName)}
+          filenames={topic.files
+            .sort((file1, file2) => file1.fileName > file2.fileName)
+            .map(file => file.fileName)}
           onFileClicked={onFileClicked}
         />
       </div>

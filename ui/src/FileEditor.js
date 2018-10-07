@@ -9,7 +9,7 @@ const EditorPane = props => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <textarea value={content} onChange={handleContentChanged} />
+          <textarea autoFocus value={content} onChange={handleContentChanged} />
         </div>
         <div>
           <input type="submit" value="submit" />
