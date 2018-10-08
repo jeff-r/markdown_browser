@@ -39,10 +39,6 @@ a {
   color: hsl(180, 85%, 20%);
 }
 
-div.active > a {
-  background: red;
-}
-
 a.topic-name,
 a.link {
   cursor: pointer;

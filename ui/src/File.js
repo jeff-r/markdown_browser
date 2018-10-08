@@ -1,10 +1,10 @@
 import React from "react";
 import { renderNodes } from "simple-commonmark-react";
-
 import ReactRouterLinkRenderer from "./ReactRouterLinkRenderer";
 
 export const File = ({ file, onEditClicked }) => {
   const { fileName, content } = file;
+  const safeContent = content ? content : "";
   let markdownOptions = {
     className: "markdown",
     customRenderers: { link: ReactRouterLinkRenderer }
@@ -20,7 +20,7 @@ export const File = ({ file, onEditClicked }) => {
           </a>
         </div>
       </div>
-      <div>{renderNodes(content, markdownOptions)}</div>
+      <div>{renderNodes(safeContent, markdownOptions)}</div>
     </div>
   );
 };

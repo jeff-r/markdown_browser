@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { isatty } from "tty";
 
 export const TopicFiles = ({ filenames, currentFileName }) => {
   return (
