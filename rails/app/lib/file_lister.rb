@@ -30,7 +30,8 @@ module FileLister
   end
 
   def project_dir
-    @project_dir ||= '/home/jeff/Dropbox/docs/jeffs-job-folder/2018/docs/'
+    return @project_dir if @project_dir
+    @project_dir = ENV["NOTES_DIR"] || '/home/jeff/Dropbox/docs/wiki/'
   end
 
   def renderable?(filename)
