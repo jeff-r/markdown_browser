@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ~/.rvm/scripts/rvm
+
+echo $1
+
+cd rails
+NOTES_DIR=$1 rails s -p 4000 &
+
+cd ../ui
+yarn start
