@@ -1,11 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-source ~/.rvm/scripts/rvm
+target_dir = ARGV.shift || '/home/jeff/Dropbox/docs/wiki/'
+ARGV.clear
 
-echo $1
+rails_pid = fork do
+  Dir.chdir "rails"
+  `NOTES_DIR=#{target_dir} rails s -p 4000`
+end
 
-cd rails
-NOTES_DIR=$1 rails s -p 4000 &
+`cd ui && yarn start`
+gets
 
-cd ../ui
-yarn start
+Process.kill 9, rails_pid
