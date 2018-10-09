@@ -9,6 +9,11 @@ class DirectoriesController < ApplicationController
     render json: { filenames: files }
   end
 
+  def path
+    pathname = params[:pathname] || "/"
+    render json: { filenames: file(pathname) }
+  end
+
   def update_file
     update_file_content params[:filename], params[:content]
     render json: { params: params }

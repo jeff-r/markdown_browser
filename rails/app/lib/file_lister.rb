@@ -55,4 +55,33 @@ module FileLister
   def relative_path(path)
     path.gsub(project_dir.to_s, "").gsub(/^\//, "")
   end
+
+  def file(path)
+    full_path = project_dir + path
+    if File.directory?(full_path)
+      directory_contents full_path
+    else
+      File.read(full_path)
+    end
+  end
+
+  private
+
+  def directory_contents(path)
+    filenames = Dir.glob("#{path}*")
+    filenames.map do |filename|
+      {
+        filename: filename.gsub(/^#{project_dir}/,''),
+        type: file_type(filename)
+      }
+    end
+  end
+
+  def file_type(path)
+    if File.directory?(path)
+      'directory'
+    else
+      'file'
+    end
+  end
 end
