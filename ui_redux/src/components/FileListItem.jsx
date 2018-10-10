@@ -1,18 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 export class FileListItem extends React.Component {
-  fetchContent = () => {
-    let { addFileContent, fetchFileContent, file, dispatch } = this.props;
-    let filename = file.filename;
-
-    console.log("fetchContent");
-    fetchFileContent(filename, (filename, content) =>
-      dispatch(addFileContent(filename, content))
-    );
-  };
-
   render() {
+    const filename = this.props.file.filename;
+
     return (
-      <div onClick={() => this.fetchContent()}>{this.props.file.filename}</div>
+      <div>
+        <Link to={filename}>{filename}</Link>
+      </div>
     );
   }
 }
