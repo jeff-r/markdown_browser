@@ -1,4 +1,4 @@
-import { ADD_FILENAME } from "../constants/ActionTypes";
+import { ADD_FILENAME, ADD_FILE_CONTENT } from "../constants/ActionTypes";
 
 function files(state = [], action) {
   switch (action.type) {
@@ -7,6 +7,12 @@ function files(state = [], action) {
         ...state,
         { filename: action.filename, type: action.fileType, content: null }
       ];
+    case ADD_FILE_CONTENT:
+      return state.map(fileElement => {
+        if (fileElement.filename === action.filename)
+          fileElement.content = action.content;
+        return fileElement;
+      });
     default:
       return state;
   }

@@ -11,7 +11,7 @@ class DirectoriesController < ApplicationController
 
   def path
     pathname = params[:pathname] || "/"
-    render json: { filenames: file(pathname) }
+    render json: { content: file(pathname) }
   end
 
   def update_file
