@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { addFilename } from "../actions";
+import { fetchPath } from "../api/fetchPath";
 
 class FileListItem extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class FileListItem extends React.Component {
 class FileList extends React.Component {
   render() {
     return (
-      <div>
+      <div className="file-list">
         {this.props.files.map(file => (
           <FileListItem key={file.filename} file={file} />
         ))}
@@ -22,11 +23,12 @@ class FileList extends React.Component {
 
 class Notes extends React.Component {
   componentDidMount() {
-    this.props.dispatch(addFilename("bbbb.md", "file"));
+    fetchPath("/notes/", (filename, type) =>
+      this.props.dispatch(addFilename(filename, type))
+    );
   }
 
   render() {
-    console.log(this.props.dispatch);
     return <FileList files={this.props.files} />;
   }
 }
