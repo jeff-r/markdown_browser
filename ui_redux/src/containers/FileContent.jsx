@@ -9,7 +9,11 @@ export const FileContent = ({ file }) => {
     customRenderers: { link: ReactRouterLinkRenderer }
   };
   return (
-    <div className="filecontent">
+    <div className="file-content">
+      <div>********************************</div>
+      <div className="content-header">
+        <div className="file-name">{file.filename}</div>
+      </div>
       {renderNodes(safeContent, markdownOptions)}
     </div>
   );

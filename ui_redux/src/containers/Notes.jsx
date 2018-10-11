@@ -28,7 +28,7 @@ class Notes extends React.Component {
               const currentFilename = props.location.pathname;
 
               return (
-                <div className="notes">
+                <div className="container">
                   <FileList
                     files={this.props.files}
                     currentFilename={currentFilename}

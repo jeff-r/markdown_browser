@@ -1,12 +1,7 @@
-body {
-  padding-left: 20px;
-  padding-top: 20px;
-}
-
 .file-list {
-  border: solid 1px #ccc;
-  width: 300px;
-  padding: 5px;
+  /* width: 300px; */
+  padding: 10px;
+  border-right: solid 1px hsl(180, 20%, 90%);
 }
 
 .notes {
@@ -25,4 +20,108 @@ body {
 }
 .depth-2 {
   padding-left: 30px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* font-family: "Montserrat", sans-serif;
+  font-family: "Niramit", sans-serif;
+  font-family: "Work Sans", sans-serif;
+  font-family: "Raleway", sans-serif; */
+
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 17px;
+}
+
+div.container {
+  height: 100%;
+  display: flex;
+  padding: 10px;
+}
+
+a:visited {
+  color: hsl(180, 85%, 20%);
+}
+
+a:hover {
+  color: hsl(180, 50%, 40%);
+}
+
+a.current {
+  color: hsl(180, 70%, 40%);
+}
+
+a {
+  text-decoration: none;
+  color: hsl(180, 85%, 20%);
+}
+
+a.topic-name,
+a.link {
+  cursor: pointer;
+}
+
+.topic-filename {
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+div.file-name {
+  font-weight: "bold";
+}
+
+div.file-content {
+  margin-left: 10px;
+  width: 100%;
+}
+
+div.file {
+  padding: 10px;
+}
+
+div.content-header {
+  padding: 10px;
+  display: flex;
+  background: hsl(0, 50%, 10%);
+  color: white;
+}
+
+div.content-header a {
+  padding-right: 10px;
+  display: flex;
+  background: hsl(0, 50%, 10%);
+  color: white;
+}
+
+div.content-header a:hover {
+  color: white;
+  font-weight: bold;
+}
+
+div.actions {
+  margin-left: auto;
+  display: flex;
+}
+
+div.content {
+  padding: 10px;
+}
+
+.file-editor {
+  margin-left: 20px;
+}
+
+.file-editor-form {
+  display: flex;
+}
+
+.file-editor-form textarea {
+  min-width: 500px;
+  min-height: 400px;
+}
+
+.editor-titlebar {
+  min-height: 2em;
 }
