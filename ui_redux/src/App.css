@@ -135,3 +135,11 @@ div.content {
 .editor-titlebar {
   min-height: 2em;
 }
+
+.hide-file-list {
+  display: none;
+}
+
+.toggle-visibility-link {
+  cursor: pointer;
+}

@@ -3,6 +3,14 @@ import { FileListItem } from "./FileListItem";
 import { fetchPath } from "../api/fetchPath";
 
 export class FileList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showFileList: true
+    };
+  }
+
   componentWillUpdate(nextProps) {
     this.updateContentIfNeeded(nextProps.currentFilename);
   }
@@ -39,20 +47,40 @@ export class FileList extends React.Component {
     return this.props.files.sort((a, b) => a.filename > b.filename);
   };
 
+  onListDisplayLinkClicked = () => {
+    this.setState({ showFileList: !this.state.showFileList });
+  };
+
   render() {
     let { fetchFileContent, addFileContent } = this.props;
 
+    let displayLinkClass = this.state.showFileList
+      ? "show-file-list"
+      : "hide-file-list";
+
+    let displayLinkText = this.state.showFileList ? "<<" : ">>";
+
     return (
       <div className="file-list">
-        {this.topFiles().map(file => (
-          <FileListItem
-            key={file.filename}
-            file={file}
-            fetchFileContent={fetchFileContent}
-            addFileContent={addFileContent}
-            dispatch={this.props.dispatch}
-          />
-        ))}
+        <div>
+          <a
+            className="toggle-visibility-link"
+            onClick={this.onListDisplayLinkClicked}
+          >
+            {displayLinkText}
+          </a>
+        </div>
+        <div className={displayLinkClass}>
+          {this.topFiles().map(file => (
+            <FileListItem
+              key={file.filename}
+              file={file}
+              fetchFileContent={fetchFileContent}
+              addFileContent={addFileContent}
+              dispatch={this.props.dispatch}
+            />
+          ))}
+        </div>
       </div>
     );
   }
