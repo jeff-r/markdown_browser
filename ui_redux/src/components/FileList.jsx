@@ -3,20 +3,8 @@ import { FileListItem } from "./FileListItem";
 import { fetchPath } from "../api/fetchPath";
 
 export class FileList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      continue: true
-    };
-  }
-
   componentWillUpdate(nextProps) {
-    if (this.state.continue) {
-      setTimeout(
-        () => this.updateContentIfNeeded(nextProps.currentFilename),
-        2000
-      );
-    }
+    this.updateContentIfNeeded(nextProps.currentFilename);
   }
 
   updateContent = file => {
@@ -44,8 +32,11 @@ export class FileList extends React.Component {
     let file = this.props.fileFromName(filename);
     if (file && file.content === null) {
       this.updateContent(file);
-    } else {
     }
+  };
+
+  topFiles = () => {
+    return this.props.files.sort((a, b) => a.filename > b.filename);
   };
 
   render() {
@@ -53,12 +44,7 @@ export class FileList extends React.Component {
 
     return (
       <div className="file-list">
-        <div>
-          <a onClick={() => this.setState({ continue: !this.state.continue })}>
-            Halt
-          </a>
-        </div>
-        {this.props.files.map(file => (
+        {this.topFiles().map(file => (
           <FileListItem
             key={file.filename}
             file={file}
