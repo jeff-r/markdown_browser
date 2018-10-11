@@ -2,37 +2,21 @@ import React from "react";
 import { renderNodes } from "simple-commonmark-react";
 import ReactRouterLinkRenderer from "./ReactRouterLinkRenderer";
 import RenderedFileContent from "./RenderedFileContent";
-
-const EditorPane = props => {
-  const { content, handleContentChanged, handleSubmit } = props;
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <textarea autoFocus value={content} onChange={handleContentChanged} />
-        </div>
-        <div>
-          <input type="submit" value="submit" />
-        </div>
-      </form>
-    </div>
-  );
-};
+import FileContentEditorForm from "./FileContentEditorForm";
 
 class FileEditor extends React.Component {
   constructor(props) {
     super(props);
 
     const { handleSubmit, file, goHome } = props;
-    const { fileName, content } = file;
+    const { filename, content } = file;
 
     this.handleSubmit = handleSubmit;
     this.goHome = goHome;
 
     this.state = {
       content: content,
-      filename: fileName
+      filename: filename
     };
   }
 
@@ -64,12 +48,9 @@ class FileEditor extends React.Component {
   render() {
     return (
       <div className="file-editor">
-        <div className="editor-titlebar">
-          <a onClick={this.goHome}>Home</a>
-        </div>
-
         <div className="file-editor-form">
-          <EditorPane
+          <FileContentEditorForm
+            filename={this.state.filename}
             content={this.state.content}
             handleContentChanged={this.handleContentChanged}
             handleSubmit={this.onSubmit}

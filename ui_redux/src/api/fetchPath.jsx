@@ -4,12 +4,10 @@ export function fetchPath(path, addFilename) {
     method: "get",
     mode: "cors"
   };
-  console.log("fetchPath", url);
   fetch(url, options)
     .then(res => res.json())
     .then(json => {
       json.content.forEach(file => {
-        console.log("received content for", url);
         addFilename(file.filename, file.type);
       });
     });
@@ -21,11 +19,26 @@ export function fetchFileContent(path, addFileContent) {
     method: "get",
     mode: "cors"
   };
-  console.log("fetchFileContent", url);
   fetch(url, options)
     .then(res => res.json())
     .then(json => {
-      console.log("received content for", url);
       addFileContent(path, json.content);
     });
+}
+
+export function updateFileContent(filename, content) {
+  if (filename === null || content === null) return;
+  let options = {
+    method: "post",
+    mode: "cors",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ filename: filename, content: content })
+  };
+  let url = "http://localhost:4000/update_file";
+  fetch(url, options)
+    .then(res => res.json())
+    .then(res => console.log(res));
 }
