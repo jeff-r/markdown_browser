@@ -4,11 +4,12 @@ export function fetchPath(path, addFilename) {
     method: "get",
     mode: "cors"
   };
+  console.log("fetchPath", url);
   fetch(url, options)
     .then(res => res.json())
     .then(json => {
-      console.log(json);
       json.content.forEach(file => {
+        console.log("received content for", url);
         addFilename(file.filename, file.type);
       });
     });
@@ -20,10 +21,11 @@ export function fetchFileContent(path, addFileContent) {
     method: "get",
     mode: "cors"
   };
+  console.log("fetchFileContent", url);
   fetch(url, options)
     .then(res => res.json())
     .then(json => {
-      console.log(json);
+      console.log("received content for", url);
       addFileContent(path, json.content);
     });
 }

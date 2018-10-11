@@ -8,3 +8,11 @@ body {
   width: 300px;
   padding: 5px;
 }
+
+.notes {
+  display: flex;
+}
+
+.filecontent {
+  padding: 20px;
+}

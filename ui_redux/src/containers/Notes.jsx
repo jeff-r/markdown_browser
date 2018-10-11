@@ -5,6 +5,10 @@ import { fetchPath, fetchFileContent } from "../api/fetchPath";
 import { FileList } from "../components/FileList";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+const FileContent = props => (
+  <div className="filecontent">{props.file.content}</div>
+);
+
 class Notes extends React.Component {
   componentDidMount() {
     fetchPath("/", (filename, type) =>
@@ -12,21 +16,35 @@ class Notes extends React.Component {
     );
   }
 
+  fileFromName = filename => {
+    let file = this.props.files.filter(file => file.filename === filename)[0];
+
+    return file;
+  };
+
   render() {
     return (
       <Router>
         <div>
           <Route
             render={props => {
-              // console.log(props);
+              const currentFilename = props.location.pathname;
+
               return (
-                <FileList
-                  files={this.props.files}
-                  currentFilename={props.location.pathname}
-                  fetchFileContent={fetchFileContent}
-                  addFileContent={addFileContent}
-                  dispatch={this.props.dispatch}
-                />
+                <div className="notes">
+                  <FileList
+                    files={this.props.files}
+                    currentFilename={currentFilename}
+                    fetchFileContent={fetchFileContent}
+                    addFileContent={addFileContent}
+                    addFilename={addFilename}
+                    fileFromName={this.fileFromName}
+                    dispatch={this.props.dispatch}
+                  />
+                  <FileContent
+                    file={this.fileFromName(currentFilename) || { content: "" }}
+                  />
+                </div>
               );
             }}
           />

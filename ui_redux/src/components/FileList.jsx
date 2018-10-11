@@ -1,33 +1,51 @@
 import React from "react";
 import { FileListItem } from "./FileListItem";
+import { fetchPath } from "../api/fetchPath";
 
 export class FileList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      continue: true
+    };
+  }
+
   componentWillUpdate(nextProps) {
-    this.updateContentIfNeeded(nextProps.currentFilename);
+    if (this.state.continue) {
+      setTimeout(
+        () => this.updateContentIfNeeded(nextProps.currentFilename),
+        2000
+      );
+    }
   }
 
   updateContent = file => {
-    console.log("Updating  content for " + file.filename);
-
-    let { addFileContent, fetchFileContent, dispatch } = this.props;
+    let {
+      addFilename,
+      addFileContent,
+      fetchFileContent,
+      dispatch
+    } = this.props;
     let filename = file.filename;
 
-    console.log("fetchContent");
-    fetchFileContent(filename, (filename, content) =>
-      dispatch(addFileContent(filename, content))
-    );
-  };
-
-  updateContentIfNeeded = filename => {
-    let file = this.fileFromName(filename);
-    console.log(file);
-    if (file && file.content === null) {
-      this.updateContent(file);
+    if (file.type === "file") {
+      fetchFileContent(filename, (filename, content) =>
+        dispatch(addFileContent(filename, content))
+      );
+    } else {
+      fetchPath(filename + "/", (filename, type) => {
+        dispatch(addFilename(filename, type));
+        dispatch(addFileContent(file.filename, "fetched"));
+      });
     }
   };
 
-  fileFromName = filename => {
-    return this.props.files.filter(file => file.filename === filename)[0];
+  updateContentIfNeeded = filename => {
+    let file = this.props.fileFromName(filename);
+    if (file && file.content === null) {
+      this.updateContent(file);
+    } else {
+    }
   };
 
   render() {
@@ -35,6 +53,11 @@ export class FileList extends React.Component {
 
     return (
       <div className="file-list">
+        <div>
+          <a onClick={() => this.setState({ continue: !this.state.continue })}>
+            Halt
+          </a>
+        </div>
         {this.props.files.map(file => (
           <FileListItem
             key={file.filename}
