@@ -72,6 +72,16 @@ div.file-name {
   font-weight: "bold";
 }
 
+div.file-content-header {
+  width: 100%;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+div.content-header {
+  width: 100%;
+}
+
 div.file-content {
   margin-left: 10px;
   width: 100%;

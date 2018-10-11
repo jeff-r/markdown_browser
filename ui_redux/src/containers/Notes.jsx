@@ -4,7 +4,7 @@ import { addFilename, addFileContent } from "../actions";
 import { fetchPath, fetchFileContent } from "../api/fetchPath";
 import { FileList } from "../components/FileList";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { FileContent } from "../components/FileContent";
+import FileContent from "../components/FileContent";
 
 class Notes extends React.Component {
   componentDidMount() {
