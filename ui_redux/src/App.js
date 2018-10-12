@@ -23,7 +23,9 @@ class App extends Component {
         <header className="content">
           <div>
             <Provider store={store}>
-              <Notes />
+              <div>
+                <Notes />
+              </div>
             </Provider>
           </div>
         </header>

@@ -8,11 +8,10 @@ class FileEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    const { handleSubmit, file, goHome } = props;
+    const { handleSubmit, file } = props;
     const { filename, content } = file;
 
     this.handleSubmit = handleSubmit;
-    this.goHome = goHome;
 
     this.state = {
       content: content,
