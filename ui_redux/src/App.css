@@ -1,9 +1,3 @@
-.file-list {
-  /* width: 300px; */
-  padding: 10px;
-  border-right: solid 1px hsl(180, 20%, 90%);
-}
-
 .notes {
   display: flex;
 }
@@ -137,9 +131,24 @@ div.content {
 }
 
 .hide-file-list {
-  display: none;
+  transition: width 300ms ease-in, opacity 300ms ease-out;
+  width: 20px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.show-file-list {
+  transition: width 300ms ease-in, opacity 300ms ease-in;
+  width: 300px;
+  opacity: 1;
+  overflow: hidden;
 }
 
 .toggle-visibility-link {
   cursor: pointer;
+}
+
+.file-list {
+  padding: 10px;
+  border-right: solid 1px hsl(180, 20%, 90%);
 }
