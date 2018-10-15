@@ -8,7 +8,7 @@ rails_pid = fork do
   `NOTES_DIR=#{target_dir} rails s -p 4000`
 end
 
-`cd ui && yarn start`
+`cd ui_redux && yarn start`
 gets
 
 Process.kill 9, rails_pid
