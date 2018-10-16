@@ -1,11 +1,21 @@
 import React from "react";
 import FileContentEditor from "./FileContentEditor";
 import RenderedFileContent from "./RenderedFileContent";
+import { connect } from "react-redux";
 
-export const FileContentDisplay = ({ editing, file }) => {
-  if (editing) {
-    return <FileContentEditor file={file} />;
+const FileContentDisplay = props => {
+  if (props.editing) {
+    return <FileContentEditor file={props.file} />;
   } else {
-    return <RenderedFileContent file={file} />;
+    return <RenderedFileContent file={props.file} />;
   }
 };
+
+function mapStateToProps(state, ownProps) {
+  return {
+    editing: state.ui_state.editing,
+    file: ownProps.file
+  };
+}
+
+export default connect(mapStateToProps)(FileContentDisplay);

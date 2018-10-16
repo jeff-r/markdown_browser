@@ -51,5 +51,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(FileContentEditorForm);
-
-// export default FileContentEditorForm;

@@ -2,12 +2,13 @@ import React from "react";
 import { renderNodes } from "simple-commonmark-react";
 import ReactRouterLinkRenderer from "./ReactRouterLinkRenderer";
 
-const RenderedFileContent = ({ file, content }) => {
+const RenderedFileContent = props => {
+  let file = props.file;
   let safeContent;
   if (file) {
     safeContent = file.content || "";
   } else {
-    safeContent = content || "";
+    safeContent = "";
   }
 
   let markdownOptions = {
