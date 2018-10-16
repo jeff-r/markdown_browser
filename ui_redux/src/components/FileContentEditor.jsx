@@ -8,10 +8,8 @@ class FileEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    const { handleSubmit, file } = props;
+    const { file } = props;
     const { filename, content } = file;
-
-    this.handleSubmit = handleSubmit;
 
     this.state = {
       content: content,
@@ -36,14 +34,6 @@ class FileEditor extends React.Component {
     });
   };
 
-  onSubmit = event => {
-    event.preventDefault();
-    this.handleSubmit({
-      filename: this.state.filename,
-      content: this.state.content
-    });
-  };
-
   render() {
     return (
       <div className="file-editor">
@@ -52,7 +42,6 @@ class FileEditor extends React.Component {
             filename={this.state.filename}
             content={this.state.content}
             handleContentChanged={this.handleContentChanged}
-            handleSubmit={this.onSubmit}
           />
           <RenderedFileContent content={this.state.content} />
         </div>
