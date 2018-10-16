@@ -1,2 +1,3 @@
 export const ADD_FILENAME = "ADD_FILENAME";
 export const ADD_FILE_CONTENT = "ADD_FILE_CONTENT";
+export const TOGGLE_EDITING = "TOGGLE_EDITING";

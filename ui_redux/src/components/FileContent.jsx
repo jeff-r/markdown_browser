@@ -1,5 +1,5 @@
 import React from "react";
-import { FileContentHeader } from "./FileContentHeader";
+import FileContentHeader from "./FileContentHeader";
 import { FileContentDisplay } from "./FileContentDisplay";
 
 class FileContent extends React.Component {
@@ -18,11 +18,7 @@ class FileContent extends React.Component {
   render() {
     return (
       <div className="file-content-header">
-        <FileContentHeader
-          editing={this.state.editing}
-          file={this.props.file}
-          toggleEditing={this.toggleEditing}
-        />
+        <FileContentHeader file={this.props.file} />
         <FileContentDisplay
           editing={this.state.editing}
           file={this.props.file}

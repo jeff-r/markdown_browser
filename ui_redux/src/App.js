@@ -6,8 +6,10 @@ import rootReducer from "./reducers";
 import { Provider } from "react-redux";
 
 const initialState = {
-  // files: [{ filename: "aaa.md", type: "file", content: "This is the content" }]
-  files: []
+  files: [],
+  ui_state: {
+    editing: false
+  }
 };
 
 const store = createStore(
