@@ -1,8 +1,10 @@
 import React from "react";
 import { FileListItem } from "./FileListItem";
-import { fetchPath } from "../api/fetchPath";
+import { fetchFileContent, fetchPath } from "../api/fetchPath";
+import { connect } from "react-redux";
+import { addFilename, addFileContent } from "../actions";
 
-export class FileList extends React.Component {
+class FileList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,20 +14,15 @@ export class FileList extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    this.updateContentIfNeeded(nextProps.currentFilename);
+    this.updateContentIfNeeded(nextProps.uiState.currentFileIndex);
   }
 
   updateContent = file => {
-    let {
-      addFilename,
-      addFileContent,
-      fetchFileContent,
-      dispatch
-    } = this.props;
+    let { addFilename, addFileContent, fetchContent, dispatch } = this.props;
     let filename = file.filename;
 
     if (file.type === "file") {
-      fetchFileContent(filename, (filename, content) =>
+      fetchContent(filename, (filename, content) =>
         dispatch(addFileContent(filename, content))
       );
     } else {
@@ -37,7 +34,7 @@ export class FileList extends React.Component {
   };
 
   updateContentIfNeeded = filename => {
-    let file = this.props.fileFromName(filename);
+    let file = this.props.files[this.props.uiState.currentFileIndex];
     if (file && file.content === null) {
       this.updateContent(file);
     }
@@ -52,8 +49,6 @@ export class FileList extends React.Component {
   };
 
   render() {
-    let { fetchFileContent, addFileContent } = this.props;
-
     let displayLinkClass = this.state.showFileList
       ? "show-file-list"
       : "hide-file-list";
@@ -63,25 +58,42 @@ export class FileList extends React.Component {
     return (
       <div className="file-list">
         <div>
-          <a
+          <button
             className="toggle-visibility-link"
             onClick={this.onListDisplayLinkClicked}
           >
             {displayLinkText}
-          </a>
+          </button>
         </div>
         <div className={displayLinkClass}>
           {this.topFiles().map(file => (
-            <FileListItem
-              key={file.filename}
-              file={file}
-              fetchFileContent={fetchFileContent}
-              addFileContent={addFileContent}
-              dispatch={this.props.dispatch}
-            />
+            <FileListItem key={file.filename} file={file} />
           ))}
         </div>
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    files: state.files,
+    uiState: state.uiState
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addFilename: (filename, fileType) =>
+      dispatch(addFilename(filename, fileType)),
+    fetchContent: filename =>
+      fetchFileContent(filename, (filename, content) =>
+        dispatch(addFileContent(filename, content))
+      )
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FileList);

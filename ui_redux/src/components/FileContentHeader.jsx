@@ -12,9 +12,9 @@ const FileContentHeader = props => {
     <div className="content-header">
       <div className="file-name">{filename}</div>
       <div className="actions">
-        <a className="link" onClick={props.toggleEditing}>
+        <button className="link" onClick={props.toggleEditing}>
           {actionText}
-        </a>
+        </button>
       </div>
     </div>
   );
@@ -22,7 +22,7 @@ const FileContentHeader = props => {
 
 function mapStateToProps(state, ownProps) {
   return {
-    ui_state: state,
+    uiState: state,
     ownProps
   };
 }

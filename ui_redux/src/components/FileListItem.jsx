@@ -9,10 +9,11 @@ export class FileListItem extends React.Component {
 
   render() {
     const filename = this.props.file.filename;
+    const safeFilename = filename.replace(/\/\/*/, "/");
 
     return (
-      <div className={"depth-" + this.depth(filename)}>
-        <Link to={filename}>{displayName(filename, 2)}</Link>
+      <div className={"depth-" + this.depth(safeFilename)}>
+        <Link to={safeFilename}>{displayName(safeFilename, 2)}</Link>
       </div>
     );
   }

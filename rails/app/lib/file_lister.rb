@@ -68,10 +68,10 @@ module FileLister
   private
 
   def directory_contents(path)
-    filenames = Dir.glob("#{path}*")
+    filenames = Dir.glob("#{path}/*")
     filenames.map do |filename|
       {
-        filename: filename.gsub(/^#{project_dir}/,''),
+        filename: filename.gsub(/^#{project_dir}/,'').gsub("//","/"),
         type: file_type(filename)
       }
     end

@@ -1,22 +1,42 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addFilename, addFileContent } from "../actions";
 import { fetchPath, fetchFileContent } from "../api/fetchPath";
-import { FileList } from "../components/FileList";
+import FileList from "../components/FileList";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import FileContent from "../components/FileContent";
+import { addFilename, addFileContent, setCurrentFileIndex } from "../actions";
 
 class Notes extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loadingIndex: false
+    };
+  }
   componentDidMount() {
-    fetchPath("/", (filename, type) =>
-      this.props.dispatch(addFilename(filename, type))
-    );
+    this.props.fetchNames("/");
   }
 
-  fileFromName = filename => {
-    let file = this.props.files.filter(file => file.filename === filename)[0];
+  queueSetIndex = filename =>
+    setTimeout(() => {
+      this.setIndexAndFetchContent(filename);
+    }, 1);
 
-    return file;
+  setIndexAndFetchContent = filename => {
+    if (!this.props.files) return;
+
+    const newIndex = this.props.files.findIndex(
+      file => file.filename === filename
+    );
+
+    if (newIndex !== this.props.uiState.currentFileIndex) {
+      const file = this.props.files[newIndex];
+      if (file && !file.content) {
+        this.props.setCurrentFileIndex(newIndex);
+        this.props.fetchContent(filename);
+      }
+    }
   };
 
   render() {
@@ -25,21 +45,16 @@ class Notes extends React.Component {
         <div>
           <Route
             render={props => {
-              const currentFilename = props.location.pathname;
-
+              this.queueSetIndex(props.location.pathname);
               return (
                 <div className="container">
-                  <FileList
-                    files={this.props.files}
-                    currentFilename={currentFilename}
-                    fetchFileContent={fetchFileContent}
-                    addFileContent={addFileContent}
-                    addFilename={addFilename}
-                    fileFromName={this.fileFromName}
-                    dispatch={this.props.dispatch}
-                  />
+                  <FileList />
                   <FileContent
-                    file={this.fileFromName(currentFilename) || { content: "" }}
+                    file={
+                      this.props.files[this.props.uiState.currentFileIndex] || {
+                        content: ""
+                      }
+                    }
                   />
                 </div>
               );
@@ -51,10 +66,33 @@ class Notes extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    files: state.files
+    files: state.files,
+    uiState: state.uiState
   };
 }
 
-export default connect(mapStateToProps)(Notes);
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchNames: path =>
+      fetchPath(path, (filename, type) =>
+        dispatch(addFilename(filename, type))
+      ),
+    fetchContent: filename =>
+      fetchFileContent(filename, (filename, content) => {
+        dispatch(addFileContent(filename, content));
+        if (content === "directory") {
+          fetchPath(filename, (filename, type) =>
+            dispatch(addFilename(filename, type))
+          );
+        }
+      }),
+    setCurrentFileIndex: index => dispatch(setCurrentFileIndex(index))
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Notes);

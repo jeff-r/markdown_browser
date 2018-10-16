@@ -13,7 +13,7 @@ const FileContentDisplay = props => {
 
 function mapStateToProps(state, ownProps) {
   return {
-    editing: state.ui_state.editing,
+    editing: state.uiState.editing,
     file: ownProps.file
   };
 }

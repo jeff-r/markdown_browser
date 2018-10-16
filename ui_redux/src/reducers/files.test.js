@@ -49,5 +49,19 @@ describe("files reducer", () => {
         }
       ]);
     });
+
+    test("Adds an array of files", () => {
+      let state = [
+        { filename: "bbb", type: "directory", content: "directory" }
+      ];
+      let newState = [
+        { filename: "bbb", type: "directory", content: "directory" },
+        { filename: "ccc.md", type: "file", content: "something" }
+      ];
+      expect(files(state, addFileContent("somedir", newState))).toEqual([
+        { filename: "bbb", type: "directory", content: "directory" },
+        { filename: "ccc.md", type: "file", content: "something" }
+      ]);
+    });
   });
 });

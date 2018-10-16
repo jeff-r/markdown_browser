@@ -7,7 +7,8 @@ import { Provider } from "react-redux";
 
 const initialState = {
   files: [],
-  ui_state: {
+  uiState: {
+    currentFileIndex: -1,
     editing: false
   }
 };

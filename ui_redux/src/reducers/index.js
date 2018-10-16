@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
 import files from "./files";
-import ui_state from "./ui_state";
+import uiState from "./uiState";
 
 const rootReducer = combineReducers({
   files,
-  ui_state
+  uiState
 });
 
 export default rootReducer;
